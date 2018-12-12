@@ -18,4 +18,3 @@ class NullStoreAdapter implements StoreAdapterInterface
         return true;
     }
 }
-
