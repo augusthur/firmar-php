@@ -45,8 +45,11 @@ class FirmarService
     {
         $access = $this->tokenStorage->get();
         if ($access['expired']) {
-            $firmarResponse = $this->client->request('POST', $urlSigner.'/RA/oauth/token', [
+            $firmarResponse = $this->client->request('POST', $this->urlRA.'/oauth/token', [
                 'auth' => [$this->apiKey, $this->apiSecret],
+                'query' => [
+                    'grant_type' => 'client_credentials',
+                ],
                 'headers' => [
                     'User-Agent' => 'signar',
                     'Accept'     => 'application/json',
@@ -54,10 +57,11 @@ class FirmarService
             ]);
             $data = json_decode($firmarResponse->getBody(), true);
             $params = [
-                'token' => $resBody['access_token'],
+                'token' => $data['access_token'],
                 'expires_at' => time() + $data['expires_in'],
             ];
             $this->tokenStorage->set($params);
+            $token = $data['access_token'];
         } else {
             $token = $access['token'];
         }
@@ -76,7 +80,7 @@ class FirmarService
         if (isset($redirect)) {
             $body['urlRedirect'] = $redirect;
         }
-        $firmarResponse = $this->client->request('POST', $urlSigner.'/firmador/api/signatures', [
+        $firmarResponse = $this->client->request('POST', $this->urlSigner.'/api/signatures', [
             'headers' => [
                 'Authorization' => 'Bearer ' . $token,
                 'User-Agent' => 'signar',
