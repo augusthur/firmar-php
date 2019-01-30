@@ -4,7 +4,7 @@ namespace Augusthur\FirmarIntegration\StoreAdapter;
 
 use Augusthur\FirmarIntegration\StoreAdapterInterface;
 
-class CallableAdapter implements StoreAdapterInterface
+class CallbackAdapter implements StoreAdapterInterface
 {
     protected $setCallback;
     protected $getCallback;
