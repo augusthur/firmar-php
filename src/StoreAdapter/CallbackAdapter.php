@@ -9,7 +9,7 @@ class CallbackAdapter implements StoreAdapterInterface
     protected $setCallback;
     protected $getCallback;
 
-    public function __construct__(callable $setCallback, callable $getCallback)
+    public function __construct(callable $setCallback, callable $getCallback)
     {
         $this->setCallback = $setCallback;
         $this->getCallback = $getCallback;

@@ -9,7 +9,7 @@ class FlysystemAdapter implements StoreAdapterInterface
     protected $filesystem;
     protected $path;
 
-    public function __construct__($filesystem, $path)
+    public function __construct($filesystem, $path)
     {
         $this->filesystem = $filesystem;
         $this->path = $path;
@@ -17,7 +17,7 @@ class FlysystemAdapter implements StoreAdapterInterface
 
     public function get()
     {
-        if ($this->filesystem->has($path)) {
+        if ($this->filesystem->has($this->path)) {
             $token = json_decode($this->filesystem->read($path), true);
             $token['expired'] = time() > $token['expires_at'];
         } else {
@@ -30,6 +30,6 @@ class FlysystemAdapter implements StoreAdapterInterface
 
     public function set($token)
     {
-        return $this->filesystem->put($path, json_encode($token));
+        return $this->filesystem->put($this->path, json_encode($token));
     }
 }
