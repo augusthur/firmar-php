@@ -18,7 +18,7 @@ class FlysystemAdapter implements StoreAdapterInterface
     public function get()
     {
         if ($this->filesystem->has($this->path)) {
-            $token = json_decode($this->filesystem->read($path), true);
+            $token = json_decode($this->filesystem->read($this->path), true);
             $token['expired'] = time() > $token['expires_at'];
         } else {
             $token = [
